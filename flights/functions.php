@@ -60,7 +60,7 @@
 		$mysqli->close();
 
 		//$airport = ["city"->$city, "country"->$country];
-		$airport = rtrim($city).",<br>".rtrim($country);
+		$airport = $city.",<br>".$country;
 		return $airport;
 		
 		
