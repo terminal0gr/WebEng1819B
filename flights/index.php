@@ -4,32 +4,22 @@
 ?>
 
 
-<html>
+<!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
 	<title>Flight Scanner</title>
 	<link rel="icon" type="image/png" href="./images/plane_02.png"/>
 	
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-	<script src="http://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<!--
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-	<script src="./scripts.js"></script>-->
-	
-	<link href="./styles.css" rel="stylesheet" type="text/css" />
+	<script src="./scripts.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="./styles.css" type="text/css" />
 	
 	
 	
 	<script>
 		$(function() {
-			$( "#dialog" ).dialog({ autoOpen: false });
-			$( "#opener" ).click(function() {
-			  $( "#dialog" ).dialog( "open" );
-			});
-			
 			function log( message ) {
 				$( "<div>" ).text( message ).prependTo( "#log" );
 				$( "#log" ).scrollTop( 0 );
@@ -98,32 +88,36 @@
 
 <body>
 	<?php ini_set("allow_url_fopen", 1); ?>
-	
+
 	<form method="post" action=""> 
-		Από: <input type="text" id="origin" required name="origin" placeholder="πόλη ή αεροδρόμιο" value="<?php 
+		<label class="control-label">Από: </label>
+    <input type="text" id="origin" name="origin" class="form-textbox" value="<?php 
 		if (isset($_POST['origin'])){
 			echo($_POST['origin']); }
 		else { 
 			echo('');
 		}
 		?>"/>
-        Σε: <input type="text" id="destination" required name="destination" placeholder="πόλη ή αεροδρόμιο" value="<?php 
+    <label class="control-label">Σε: </label>
+    <input type="text" id="destination" name="destination" class="form-textbox" value="<?php 
 		if (isset($_POST['destination'])){
 			echo($_POST['destination']); }
 		else { 
 			echo('');
 		}
 		?>"/>
-		Ημ/νία αναχώρησης: 
-		<input type="text" id="departure_date" required name="departure_date" size=6 placeholder="dd/mm/yyyy" value="<?php 
+    <label class="control-label">Ημ/νία αναχώρησης: </label>
+		<input type="date" data-date="" data-date-format="DD MMMM YYYY" id="departure_date" name="departure_date" class="form-textbox" value="<?php 
 		if (isset($_POST['departure_date'])){
 			echo($_POST['departure_date']); }
 		else { 
 			echo('');
 		}
 		?>"/>
-		
-		<input type="submit" value="Αναζήτηση" name="submit" id="searchButton" />
+
+		<br/>
+    
+		<input type="submit" value="Αναζήτηση" name="submit" class="btn" id="searchButton" />
 		
 	</form>
 	
@@ -140,17 +134,17 @@
 			//echo("<br>3: ".$tdeparture_date[0]);
 			//echo("<br>4: ".$fdeparture_date);
 			
-			$request = 'https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=3jl39kYzxVtbQA9UWNg9BTV5Su3vLGnu&currency=EUR&origin='.$_POST["origin"].'&number_of_results=250'.'&destination='.$_POST["destination"].'&departure_date='.$fdeparture_date;
+			$request = 'https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=3jl39kYzxVtbQA9UWNg9BTV5Su3vLGnu&currency=EUR&origin='.$_POST["origin"].'&number_of_results=250'.'&destination='.$_POST["destination"].'&departure_date='.$_POST["departure_date"];
 			echo "<div id=request>Request url: <br><b>".$request."</b></div><br>";
 			$response  = @file_get_contents($request);
 			$code=getHttpCode($http_response_header);
 			$jsonobj  = json_decode($response);
 			
 			echo "<br><div id='flightsnum'><u>ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ:</u></div><br>";
-			
+
 			if($code == 400) {
 				echo "Δεν βρέθηκαν πτήσεις με τα κριτήρια που δώσατε!";
-			} else {
+			} elseif ($code == 200) {
 				$flights_sum = 0;
 				echo "<br><u>Νόμισμα:</u>".$jsonobj->currency;
 				
@@ -239,19 +233,12 @@
 				}
 				echo('</table>');
 				
-				echo "<script>
+				 echo "<script> 
 							alert('Βρέθηκαν ".$flights_sum." πτήσεις με τα κριτήρια που δώσατε');
 							var numobj = document.getElementById('flightsnum');
 							numobj.innerHTML = '<u>ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ:</u> <b>(Βρέθηκαν ' + ".$flights_sum." + ' πτήσεις)</b>';
 					   </script>";
 				
-				echo '<script>
-						$( "#dialog" ).dialog( "open" );
-					  </script>';
-				
-				?><div id="dialog" title="Dialog Title">I'm a dialog</div> <?php
-	
-	
 				
 			}	
 				
