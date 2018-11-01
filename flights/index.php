@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 	include("./config.php");
 	include("./functions.php");
@@ -247,6 +248,8 @@
 =======
 =======
 >>>>>>> parent of 3bd17f4... Add files via upload
+=======
+>>>>>>> parent of 3bd17f4... Add files via upload
 <?php
 	include("./config.php");
 	include("./functions.php");
@@ -485,6 +488,9 @@
 	
 </body>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 3bd17f4... Add files via upload
+=======
 >>>>>>> parent of 3bd17f4... Add files via upload
 =======
 >>>>>>> parent of 3bd17f4... Add files via upload

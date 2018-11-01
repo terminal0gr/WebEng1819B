@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php	
 	function find_airline($airline_code)
 	{
@@ -91,6 +92,8 @@
 	
 	
 =======
+=======
+>>>>>>> parent of 3bd17f4... Add files via upload
 <?php	
 	function find_airline($airline_code)
 	{
@@ -182,5 +185,8 @@
 	}
 	
 	
+<<<<<<< HEAD
+>>>>>>> parent of 3bd17f4... Add files via upload
+=======
 >>>>>>> parent of 3bd17f4... Add files via upload
 ?>
