@@ -124,22 +124,13 @@
 	<?php
 		//echo $_POST['submit'];
 		if (isset($_POST['submit'])) {
-			//echo("<br>1: ".$_POST["departure_date"]);
-			//echo("<br>2: ".join(' , ', explode("/", $_POST["departure_date"])));
-			
-			$tdeparture_date = ((strpos($_POST["departure_date"], "-") === true ) ? explode("-", $_POST["departure_date"]) : explode("/", $_POST["departure_date"]) );
-			//$fdeparture_date = ((strpos($_POST["departure_date"], "-") === true ) ? "-" : "/" );
-			
-			$fdeparture_date = $tdeparture_date[2]."-".$tdeparture_date[1]."-".$tdeparture_date[0];
-			//echo("<br>3: ".$tdeparture_date[0]);
-			//echo("<br>4: ".$fdeparture_date);
 			
 			$request = 'https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search?apikey=3jl39kYzxVtbQA9UWNg9BTV5Su3vLGnu&currency=EUR&origin='.$_POST["origin"].'&number_of_results=250'.'&destination='.$_POST["destination"].'&departure_date='.$_POST["departure_date"];
 			echo "<div id=request>Request url: <br><b>".$request."</b></div><br>";
 			$response  = @file_get_contents($request);
 			$code=getHttpCode($http_response_header);
 			$jsonobj  = json_decode($response);
-			
+      
 			echo "<br><div id='flightsnum'><u>ΑΠΟΤΕΛΕΣΜΑΤΑ ΑΝΑΖΗΤΗΣΗΣ:</u></div><br>";
 
 			if($code == 400) {
@@ -217,8 +208,10 @@
 							echo("<td align=center>".$flights->aircraft."</td>");
 							echo("<td align=center>".$flights->booking_info->travel_class."</td>");
 							echo("<td align=center>".$flights->booking_info->booking_code."</td>");
-							echo("<td align=center>".$flights->booking_info->seats_remaining."</td>");
-							
+
+              $seats=$flights->booking_info->seats_remaining;
+              if($flights->booking_info->seats_remaining==9) $seats=">=9";
+							echo("<td align=center>".$seats."</td>");
 							
 							if($index == 0) echo("<td align=center rowspan=".$dromologia.">".$results->fare->total_price."</td>");
 							if($index == 0) echo("<td align=center rowspan=".$dromologia.">".$results->fare->price_per_adult->total_fare."</td>");
