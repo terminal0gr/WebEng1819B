@@ -335,10 +335,6 @@
 							if($index == 0) echo("<td align=center rowspan=".$totallines.">".$results->fare->price_per_adult->total_fare."</td>");
 							if($index == 0) echo("<td align=center rowspan=".$totallines.">".$results->fare->price_per_adult->tax."</td>");
 
-                            if($index=count($itineraries->outbound->flights)-1) {
-								
-							}
-
 							echo("</tr>");
 
 							$index++;
