@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <head>
 	<meta charset="utf-8">
-	<title>Flight Scanner</title>
+	<title>Flight Scanner V1.0</title>
 	<link rel="icon" type="image/png" href="./images/plane_02.png"/>
 	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -291,12 +291,6 @@
 							$totallines+=count($itineraries->inbound->flights);
 						}	
 						
-						//echo('<tr><td colspan=11 style="background: lightblue; line-height:0.01">Μετάβαση</td>');
-						//echo("<td align=center rowspan=".$totallines.">".$results->fare->total_price."</td>");
-						//echo("<td align=center rowspan=".$totallines.">".$results->fare->price_per_adult->total_fare."</td>");
-						//echo("<td align=center rowspan=".$totallines.">".$results->fare->price_per_adult->tax."</td>");
-						//echo("</tr><tr>");
-
 						$flights_sum++;
 						echo("<td align=center rowspan=".$dromologia."><b>Μετάβαση</b><br>".$duration[0]."ώ ".$duration[1]."λ<br>");
 						if($dromologia == 1) 
@@ -307,8 +301,10 @@
 						$index=0;
 						
 						foreach($itineraries->outbound->flights as $flights) {
-							if($index > 0) echo("<tr>");
 							
+							if($index > 0) {
+								echo("<tr>");
+							}
 							
 							echo("<td align=center>".$flights->origin->airport."<br>".find_airport($flights->origin->airport)."</td>");
 							
@@ -340,12 +336,10 @@
 							if($index == 0) echo("<td align=center rowspan=".$totallines.">".$results->fare->price_per_adult->tax."</td>");
 
                             if($index=count($itineraries->outbound->flights)-1) {
-
+								
 							}
 
 							echo("</tr>");
-
-							//if($index > 0) echo("</tr>");
 
 							$index++;
 						}
@@ -392,7 +386,6 @@
 								if($flights->booking_info->seats_remaining==9) $seats=">=9";
 								echo("<td align=center>".$seats."</td>");
 								
-								//if($index > 0) echo("</tr>");
 								echo("</tr>");
 
 								$index++;
